@@ -27,8 +27,6 @@ __pycache__/
 # Note: We specify the paths from the root of the project
 backend/data/raw/*
 backend/data/processed/*
-backend/models/*.joblib
-backend/models/*.pkl
 
 # You might have test reports or coverage data later
 .coverage
