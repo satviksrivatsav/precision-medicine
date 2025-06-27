@@ -8,161 +8,168 @@ import matplotlib.pyplot as plt
 
 # --- Page Configuration ---
 st.set_page_config(
-    page_title="Heart Disease Prediction",
-    page_icon="❤️",
+    page_title="Precision Medicine Predictor",
+    page_icon="🔬",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# --- Caching for Performance ---
+# --- Asset Loading (Handles multiple models) ---
 @st.cache_data
-def load_assets():
-    """Load the saved model, scaler, and create a SHAP explainer."""
-    model_path = os.path.join(r"D:\Satvik\Projects\College\Minor\Code\backend", "models", "best_heart_disease_classifier.joblib")
-    scaler_path = os.path.join(r"D:\Satvik\Projects\College\Minor\Code\backend", "models", "scaler.joblib")
+def load_assets(disease_name):
+    """Load the model, scaler, and explainer for the selected disease."""
+    # Construct paths relative to the script location
+    base_path = os.path.join("models", disease_name)
+    model_path = os.path.join(base_path, f"best_{disease_name}_classifier.joblib")
+    scaler_path = os.path.join(base_path, f"{disease_name}_scaler.joblib")
     
     model = joblib.load(model_path)
     scaler = joblib.load(scaler_path)
-    
     explainer = shap.TreeExplainer(model)
     
     return model, scaler, explainer
 
-# Load all assets
-model, scaler, explainer = load_assets()
+# --- Main App Logic ---
 
-# --- Application Title and Description ---
-st.title("❤️ Heart Disease Prediction App")
-st.markdown("""
-This app predicts the likelihood of mortality from heart failure based on patient clinical data.
-Please enter the patient's information in the sidebar to get a prediction and a detailed explanation.
-This tool is for educational purposes only and is not a substitute for professional medical advice.
-""")
+# Title for the whole app
+st.title("🔬 Precision Medicine Prediction Suite")
 
-st.divider()
+# --- Sidebar Model Selection ---
+st.sidebar.title("Configuration")
+model_choice = st.sidebar.selectbox(
+    "Choose a Prediction Model",
+    ("Heart Disease", "Diabetes")
+)
 
-# --- Sidebar for User Input ---
-st.sidebar.header("Patient Information")
+# --- Dynamic UI based on Model Choice ---
 
-def get_user_input():
-    """Get user input from the sidebar."""
+if model_choice == 'Heart Disease':
+    st.header("❤️ Heart Disease Mortality Prediction")
+    
+    # Load Heart Disease Assets
+    model, scaler, explainer = load_assets('heart_disease')
+    
+    # Sidebar Inputs for Heart Disease
+    st.sidebar.header("Patient Information")
     age = st.sidebar.slider('Age', 40, 95, 60)
-    anaemia = st.sidebar.selectbox('Anaemia', ('No', 'Yes'))
-    creatinine_phosphokinase = st.sidebar.number_input('Creatinine Phosphokinase (mcg/L)', min_value=23, max_value=7861, value=582)
-    diabetes = st.sidebar.selectbox('Diabetes', ('No', 'Yes'))
+    anaemia = st.sidebar.selectbox('Anaemia', (0, 1), format_func=lambda x: 'Yes' if x == 1 else 'No')
+    creatinine_phosphokinase = st.sidebar.number_input('Creatinine Phosphokinase (mcg/L)', 23, 7861, 582)
+    diabetes_h = st.sidebar.selectbox('Diabetes', (0, 1), format_func=lambda x: 'Yes' if x == 1 else 'No')
     ejection_fraction = st.sidebar.slider('Ejection Fraction (%)', 14, 80, 38)
-    high_blood_pressure = st.sidebar.selectbox('High Blood Pressure', ('No', 'Yes'))
-    platelets = st.sidebar.number_input('Platelets (kiloplatelets/mL)', min_value=25100, max_value=850000, value=263358)
+    high_blood_pressure = st.sidebar.selectbox('High Blood Pressure', (0, 1), format_func=lambda x: 'Yes' if x == 1 else 'No')
+    platelets = st.sidebar.number_input('Platelets (kiloplatelets/mL)', 25100, 850000, 263358)
     serum_creatinine = st.sidebar.slider('Serum Creatinine (mg/dL)', 0.5, 9.4, 1.4)
     serum_sodium = st.sidebar.slider('Serum Sodium (mEq/L)', 113, 148, 137)
-    sex = st.sidebar.selectbox('Sex', ('Female', 'Male'))
-    smoking = st.sidebar.selectbox('Smoking', ('No', 'Yes'))
+    sex = st.sidebar.selectbox('Sex', (0, 1), format_func=lambda x: 'Male' if x == 1 else 'Female')
+    smoking = st.sidebar.selectbox('Smoking', (0, 1), format_func=lambda x: 'Yes' if x == 1 else 'No')
     time = st.sidebar.slider('Follow-up Period (days)', 4, 285, 130)
 
-    data = {
-        'age': age,
-        'anaemia': 1 if anaemia == 'Yes' else 0,
-        'creatinine_phosphokinase': creatinine_phosphokinase,
-        'diabetes': 1 if diabetes == 'Yes' else 0,
-        'ejection_fraction': ejection_fraction,
-        'high_blood_pressure': 1 if high_blood_pressure == 'Yes' else 0,
-        'platelets': platelets,
-        'serum_creatinine': serum_creatinine,
-        'serum_sodium': serum_sodium,
-        'sex': 1 if sex == 'Male' else 0,
-        'smoking': 1 if smoking == 'Yes' else 0,
-        'time': time
-    }
+    # Create the input DataFrame
+    data = {'age': age, 'anaemia': anaemia, 'creatinine_phosphokinase': creatinine_phosphokinase,
+            'diabetes': diabetes_h, 'ejection_fraction': ejection_fraction,
+            'high_blood_pressure': high_blood_pressure, 'platelets': platelets,
+            'serum_creatinine': serum_creatinine, 'serum_sodium': serum_sodium, 'sex': sex,
+            'smoking': smoking, 'time': time}
+    input_df = pd.DataFrame(data, index=[0])
     
-    features = pd.DataFrame(data, index=[0])
-    return features
-
-# Get the user input
-input_df = get_user_input()
-
-# --- Display User Input ---
-st.header("Patient Data Summary")
-col1, col2 = st.columns(2)
-patient_data = input_df.iloc[0]
-display_labels = {
-    'age': 'Age', 'anaemia': 'Anaemia', 'creatinine_phosphokinase': 'Creatinine Phosphokinase (mcg/L)',
-    'diabetes': 'Diabetes', 'ejection_fraction': 'Ejection Fraction (%)', 'high_blood_pressure': 'High Blood Pressure',
-    'platelets': 'Platelets (kiloplatelets/mL)', 'serum_creatinine': 'Serum Creatinine (mg/dL)',
-    'serum_sodium': 'Serum Sodium (mEq/L)', 'sex': 'Sex', 'smoking': 'Smoking', 'time': 'Follow-up Period (days)'
-}
-with col1:
-    st.markdown(f"**{display_labels['age']}:** `{patient_data['age']}`")
-    st.markdown(f"**{display_labels['sex']}:** `{'Male' if patient_data['sex'] == 1 else 'Female'}`")
-    st.markdown(f"**{display_labels['ejection_fraction']}:** `{patient_data['ejection_fraction']}` %")
-    st.markdown(f"**{display_labels['serum_creatinine']}:** `{patient_data['serum_creatinine']}` mg/dL")
-    st.markdown(f"**{display_labels['serum_sodium']}:** `{patient_data['serum_sodium']}` mEq/L")
-    st.markdown(f"**{display_labels['time']}:** `{patient_data['time']}` days")
-with col2:
-    st.markdown(f"**{display_labels['anaemia']}:** `{'Yes' if patient_data['anaemia'] == 1 else 'No'}`")
-    st.markdown(f"**{display_labels['diabetes']}:** `{'Yes' if patient_data['diabetes'] == 1 else 'No'}`")
-    st.markdown(f"**{display_labels['high_blood_pressure']}:** `{'Yes' if patient_data['high_blood_pressure'] == 1 else 'No'}`")
-    st.markdown(f"**{display_labels['smoking']}:** `{'Yes' if patient_data['smoking'] == 1 else 'No'}`")
-    st.markdown(f"**{display_labels['creatinine_phosphokinase']}:** `{patient_data['creatinine_phosphokinase']}` mcg/L")
-    st.markdown(f"**{display_labels['platelets']}:** `{int(patient_data['platelets'])}`")
-
-st.divider()
-
-# --- SHAP Plot Display Function ---
-def st_shap(plot, height=None):
-    """A wrapper to display SHAP plots in Streamlit."""
-    shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
-    st.components.v1.html(shap_html, height=height)
-
-# --- Prediction Logic and SHAP Explanation ---
-# This entire block should replace your existing one.
-if st.button("🔍 Predict Heart Disease Risk"):
-    # Define feature order (must match training)
+    # Define feature order for the model
     feature_order = ['age', 'anaemia', 'creatinine_phosphokinase', 'diabetes', 
                      'ejection_fraction', 'high_blood_pressure', 'platelets', 
                      'serum_creatinine', 'serum_sodium', 'sex', 'smoking', 'time']
+
+elif model_choice == 'Diabetes':
+    st.header("🩸 Diabetes Risk Prediction")
+    
+    # Add a disclaimer about the dataset's limitations
+    st.info("ℹ️ **Note:** This model is trained on the PIMA Indians Diabetes Dataset, which includes only female patients of Pima Indian heritage aged 21 and older.")
+
+    # Load Diabetes Assets
+    model, scaler, explainer = load_assets('diabetes')
+
+    # Sidebar Inputs for Diabetes
+    st.sidebar.header("Patient Information")
+    Pregnancies = st.sidebar.slider('Pregnancies', 0, 17, 3)
+    Glucose = st.sidebar.slider('Glucose', 0, 199, 117)
+    BloodPressure = st.sidebar.slider('Blood Pressure (mm Hg)', 0, 122, 72)
+    SkinThickness = st.sidebar.slider('Skin Thickness (mm)', 0, 99, 23)
+    Insulin = st.sidebar.slider('Insulin (mu U/ml)', 0, 846, 30)
+    BMI = st.sidebar.slider('BMI', 0.0, 67.1, 32.0, step=0.1)
+    DiabetesPedigreeFunction = st.sidebar.slider('Diabetes Pedigree Function', 0.078, 2.42, 0.3725)
+    Age = st.sidebar.slider('Age', 21, 81, 29)
+
+    # Create the input DataFrame
+    data = {'Pregnancies': Pregnancies, 'Glucose': Glucose, 'BloodPressure': BloodPressure,
+            'SkinThickness': SkinThickness, 'Insulin': Insulin, 'BMI': BMI,
+            'DiabetesPedigreeFunction': DiabetesPedigreeFunction, 'Age': Age}
+    input_df = pd.DataFrame(data, index=[0])
+
+    # Define feature order for the model
+    feature_order = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin',
+                     'BMI', 'DiabetesPedigreeFunction', 'Age']
+
+# --- Common UI elements (display input and button) ---
+
+st.subheader("Patient Data Summary")
+
+# Dynamically display the input data in a user-friendly format
+col1, col2 = st.columns(2)
+patient_data = input_df.iloc[0]
+
+# Split the features between the two columns
+features_list = feature_order
+mid_point = len(features_list) // 2 + len(features_list) % 2
+features_col1 = features_list[:mid_point]
+features_col2 = features_list[mid_point:]
+
+with col1:
+    for feature in features_col1:
+        st.markdown(f"**{feature.replace('_', ' ').title()}:** `{patient_data[feature]}`")
+
+with col2:
+    for feature in features_col2:
+        st.markdown(f"**{feature.replace('_', ' ').title()}:** `{patient_data[feature]}`")
+        
+st.divider()
+
+if st.button(f"🔍 Predict {model_choice} Risk"):
+    # Ensure columns are in the correct order
     input_df_ordered = input_df[feature_order]
     
-    # Scale the user input and convert back to DataFrame
+    # Scale the input
     scaled_input_np = scaler.transform(input_df_ordered)
     scaled_input_df = pd.DataFrame(scaled_input_np, columns=feature_order)
     
-    # --- Make Prediction ---
+    # Make prediction
     prediction = model.predict(scaled_input_df)
     prediction_proba = model.predict_proba(scaled_input_df)
     
-    # --- Display Prediction ---
+    # Display prediction result (dynamically)
     st.subheader("Prediction Result")
+    positive_class_text = "mortality from heart failure" if model_choice == 'Heart Disease' else "diabetes"
+    
     if prediction[0] == 0:
-        st.success("The model predicts a **LOW** risk of mortality from heart failure.")
+        st.success(f"The model predicts a **LOW** risk of {positive_class_text}.")
         st.write(f"**Confidence:** {prediction_proba[0][0]*100:.2f}%")
     else:
-        st.error("The model predicts a **HIGH** risk of mortality from heart failure.")
+        st.error(f"The model predicts a **HIGH** risk of {positive_class_text}.")
         st.write(f"**Confidence:** {prediction_proba[0][1]*100:.2f}%")
 
     st.divider()
 
-    # --- SHAP Explanation ---
+    # SHAP Explanation
     st.subheader("Prediction Explanation")
-    st.markdown("The plot below shows how each feature contributed to the final prediction.")
+    st.markdown("The waterfall plot below shows how each feature contributed to the final prediction.")
     
-    # --- Using the Waterfall Plot (More Robust) ---
-    
-    # 1. Use the explainer to get the Explanation object.
     explanation = explainer(scaled_input_df)
     
-    # 2. Select the explanation for our first sample and the positive class (High Risk).
-    explanation_for_class_1 = explanation[0, :, 1]
+    # Handle multi-class vs single-output from SHAP explainer
+    if isinstance(explainer.expected_value, (list, np.ndarray)) and len(explainer.expected_value) > 1:
+        explanation_to_plot = explanation[0, :, 1]
+    else:
+        explanation_to_plot = explanation[0]
 
-    # 3. Create a waterfall plot. This is a native Matplotlib plot and is very reliable.
-    #    We create a figure first to display it in Streamlit.
     fig, ax = plt.subplots()
-    shap.plots.waterfall(explanation_for_class_1, show=False)
-    plt.tight_layout() # Adjust layout to make sure everything fits
+    shap.plots.waterfall(explanation_to_plot, show=False)
+    plt.tight_layout()
     st.pyplot(fig)
-    plt.close(fig) # Close the figure to free up memory
-
-st.sidebar.divider()
-st.sidebar.info(
-    "This is a demo application. The underlying model is a tuned Random Forest classifier. "
-    "Model explainability is provided by SHAP."
-)
+    plt.close(fig)
