@@ -8,172 +8,209 @@ import matplotlib.pyplot as plt
 
 # --- Page Configuration ---
 st.set_page_config(
-    page_title="Precision Medicine Predictor",
+    page_title="Precision Medicine Suite",
     page_icon="🔬",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# --- Asset Loading (Handles multiple models) ---
+# --- Asset Loading ---
 @st.cache_data
-def load_assets(disease_name):
-    """Load the model, scaler, and explainer for the selected disease."""
-    base_path = os.path.join("models", disease_name)
-    model_path = os.path.join(base_path, f"best_{disease_name}_classifier.joblib")
-    scaler_path = os.path.join(base_path, f"{disease_name}_scaler.joblib")
+def load_assets(model_name):
+    """Load all assets for the selected model."""
+    base_path = os.path.join("models", model_name)
+    assets = {}
+    assets['model'] = joblib.load(os.path.join(base_path, f"best_{model_name}_classifier.joblib"))
+    assets['scaler'] = joblib.load(os.path.join(base_path, f"{model_name}_scaler.joblib"))
     
-    model = joblib.load(model_path)
-    scaler = joblib.load(scaler_path)
-    explainer = shap.TreeExplainer(model)
-    
-    return model, scaler, explainer
+    feature_path = os.path.join(base_path, f"{model_name}_features.joblib")
+    if os.path.exists(feature_path):
+        assets['features'] = joblib.load(feature_path)
+    else: # Fallback for simple models
+        # This gets the feature names from the scaler if a feature list wasn't saved
+        if hasattr(assets['scaler'], 'feature_names_in_'):
+            assets['features'] = assets['scaler'].feature_names_in_
+        
+    assets['explainer'] = shap.TreeExplainer(assets['model'])
+    return assets
 
-# --- Main App Logic ---
-
-# Title for the whole app
+# --- UI and Logic ---
 st.title("🔬 Precision Medicine Prediction Suite")
-
-# --- Sidebar Model Selection ---
 st.sidebar.title("Configuration")
-model_choice = st.sidebar.selectbox(
+
+model_choice_name = st.sidebar.selectbox(
     "Choose a Prediction Model",
-    ("Heart Disease", "Diabetes")
+    ("Heart Disease", "Diabetes", "Lung Cancer", "Kidney Disease")
 )
 
-# --- Dynamic UI based on Model Choice ---
+model_map = {"Heart Disease": "heart_disease", "Diabetes": "diabetes", "Lung Cancer": "lung_cancer", "Kidney Disease": "kidney_disease"}
+model_dir_name = model_map[model_choice_name]
+assets = load_assets(model_dir_name)
 
-if model_choice == 'Heart Disease':
+st.sidebar.header("Patient Information")
+data = {}
+
+# --- DYNAMIC UI GENERATION ---
+if model_choice_name == 'Heart Disease':
     st.header("❤️ Heart Disease Mortality Prediction")
+    feature_order = ['age','anaemia','creatinine_phosphokinase','diabetes','ejection_fraction','high_blood_pressure','platelets','serum_creatinine','serum_sodium','sex','smoking','time']
+    # Simplified UI creation
+    data['age'] = st.sidebar.slider('Age', 40, 95, 60, key='hd_age')
+    data['ejection_fraction'] = st.sidebar.slider('Ejection Fraction (%)', 14, 80, 38, key='hd_ef')
+    data['serum_creatinine'] = st.sidebar.slider('Serum Creatinine (mg/dL)', 0.5, 9.4, 1.4, key='hd_sc')
+    data['time'] = st.sidebar.slider('Follow-up Period (days)', 4, 285, 130, key='hd_time')
+    # Use defaults for other features for a cleaner UI
     
-    # Load Heart Disease Assets
-    model, scaler, explainer = load_assets('heart_disease')
-    
-    # Sidebar Inputs for Heart Disease
-    st.sidebar.header("Patient Information")
-    age = st.sidebar.slider('Age', 40, 95, 60)
-    anaemia = st.sidebar.selectbox('Anaemia', (0, 1), format_func=lambda x: 'Yes' if x == 1 else 'No')
-    creatinine_phosphokinase = st.sidebar.number_input('Creatinine Phosphokinase (mcg/L)', 23, 7861, 582)
-    diabetes_h = st.sidebar.selectbox('Diabetes', (0, 1), format_func=lambda x: 'Yes' if x == 1 else 'No')
-    ejection_fraction = st.sidebar.slider('Ejection Fraction (%)', 14, 80, 38)
-    high_blood_pressure = st.sidebar.selectbox('High Blood Pressure', (0, 1), format_func=lambda x: 'Yes' if x == 1 else 'No')
-    platelets = st.sidebar.number_input('Platelets (kiloplatelets/mL)', 25100, 850000, 263358)
-    serum_creatinine = st.sidebar.slider('Serum Creatinine (mg/dL)', 0.5, 9.4, 1.4)
-    serum_sodium = st.sidebar.slider('Serum Sodium (mEq/L)', 113, 148, 137)
-    sex = st.sidebar.selectbox('Sex', (0, 1), format_func=lambda x: 'Male' if x == 1 else 'Female')
-    smoking = st.sidebar.selectbox('Smoking', (0, 1), format_func=lambda x: 'Yes' if x == 1 else 'No')
-    time = st.sidebar.slider('Follow-up Period (days)', 4, 285, 130)
-
-    # Create the input DataFrame
-    data = {'age': age, 'anaemia': anaemia, 'creatinine_phosphokinase': creatinine_phosphokinase,
-            'diabetes': diabetes_h, 'ejection_fraction': ejection_fraction,
-            'high_blood_pressure': high_blood_pressure, 'platelets': platelets,
-            'serum_creatinine': serum_creatinine, 'serum_sodium': serum_sodium, 'sex': sex,
-            'smoking': smoking, 'time': time}
-    input_df = pd.DataFrame(data, index=[0])
-    
-    # Define feature order for the model
-    feature_order = ['age', 'anaemia', 'creatinine_phosphokinase', 'diabetes', 
-                     'ejection_fraction', 'high_blood_pressure', 'platelets', 
-                     'serum_creatinine', 'serum_sodium', 'sex', 'smoking', 'time']
-
-elif model_choice == 'Diabetes':
+elif model_choice_name == 'Diabetes':
     st.header("🩸 Diabetes Risk Prediction")
-
-    # Load Diabetes Assets
-    model, scaler, explainer = load_assets('diabetes')
-
-    # --- Sidebar Inputs for Diabetes ---
-    st.sidebar.header("Patient Information")
+    feature_order = ['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin','BMI','DiabetesPedigreeFunction','Age']
+    sex_d = st.sidebar.selectbox('Sex', ('Female', 'Male'), key='d_sex')
+    data['Pregnancies'] = st.sidebar.slider('Pregnancies', 0, 17, 3, key='d_preg') if sex_d == 'Female' else 0
+    if sex_d == 'Male': st.sidebar.text('Pregnancies: 0 (Set for male patient)')
+    data['Glucose'] = st.sidebar.slider('Glucose', 44, 199, 117, key='d_glucose')
+    data['BMI'] = st.sidebar.slider('BMI', 18.2, 67.1, 32.0, step=0.1, key='d_bmi')
+    data['Age'] = st.sidebar.slider('Age', 21, 81, 29, key='d_age')
     
-    # NEW: Add a sex selector to adapt the form
-    sex_d = st.sidebar.selectbox('Sex', ('Female', 'Male'))
+elif model_choice_name == 'Lung Cancer':
+    st.header("🫁 Lung Cancer Prediction")
+    feature_order = assets['features']
+    data['Age'] = st.sidebar.slider('Age', 20, 90, 65, key='lc_age')
+    data['Sex_Male'] = 1 if st.sidebar.selectbox('Sex', ('Female', 'Male'), key='lc_sex') == 'Male' else 0
+    st.sidebar.subheader("Gene Mutations")
+    for feature in feature_order:
+        if feature not in ['Age', 'Sex_Male']:
+            data[feature] = 1 if st.sidebar.checkbox(f'Mutation in {feature.replace("_", " ")}', key=f'lc_{feature}') else 0
 
-    # NEW: Conditionally set the pregnancies input based on selected sex
-    if sex_d == 'Male':
-        Pregnancies = 0
-    else:
-        Pregnancies = st.sidebar.slider('Pregnancies', 0, 17, 3)
+elif model_choice_name == 'Kidney Disease':
+    st.header("🩺 Chronic Kidney Disease Prediction")
+    
+    # The model was trained on only these 13 features (after dropping leaky features)
+    feature_order = ['age', 'bp', 'bgr', 'bu', 'sod', 'pot', 'wc', 'htn_yes', 'dm_yes', 'cad_yes', 'appet_poor', 'pe_yes', 'ane_yes']
+    
+    st.info("Enter patient information for CKD risk assessment. This model uses key predictive features while avoiding diagnostic markers.")
+    
+    # Collect only the features that the model was actually trained on
+    data['age'] = st.sidebar.slider('Age', 2, 90, 50, key='kd_age')
+    data['bp'] = st.sidebar.slider('Blood Pressure (mm/Hg)', 50, 180, 80, key='kd_bp')
+    data['bgr'] = st.sidebar.slider('Blood Glucose Random (mgs/dl)', 22, 490, 148, key='kd_bgr')
+    data['bu'] = st.sidebar.slider('Blood Urea (mgs/dl)', 1.5, 391.0, 57.0, step=0.1, key='kd_bu')
+    data['sod'] = st.sidebar.slider('Sodium (mEq/L)', 4.5, 163.0, 137.0, step=0.1, key='kd_sod')
+    data['pot'] = st.sidebar.slider('Potassium (mEq/L)', 2.5, 47.0, 4.6, step=0.1, key='kd_pot')
+    data['wc'] = st.sidebar.slider('White Blood Cell Count (cells/cumm)', 2200, 26400, 7800, step=100, key='kd_wc')
+    
+    # Categorical features (medical history)
+    data['htn_yes'] = 1 if st.sidebar.selectbox('Hypertension', ('No', 'Yes'), key='kd_htn') == 'Yes' else 0
+    data['dm_yes'] = 1 if st.sidebar.selectbox('Diabetes Mellitus', ('No', 'Yes'), key='kd_dm') == 'Yes' else 0
+    data['cad_yes'] = 1 if st.sidebar.selectbox('Coronary Artery Disease', ('No', 'Yes'), key='kd_cad') == 'Yes' else 0
+    data['appet_poor'] = 1 if st.sidebar.selectbox('Appetite', ('Good', 'Poor'), key='kd_appet') == 'Poor' else 0
+    data['pe_yes'] = 1 if st.sidebar.selectbox('Pedal Edema', ('No', 'Yes'), key='kd_pe') == 'Yes' else 0
+    data['ane_yes'] = 1 if st.sidebar.selectbox('Anemia', ('No', 'Yes'), key='kd_ane') == 'Yes' else 0
 
-    Glucose = st.sidebar.slider('Glucose', 0, 199, 117)
-    BloodPressure = st.sidebar.slider('Blood Pressure (mm Hg)', 0, 122, 72)
-    SkinThickness = st.sidebar.slider('Skin Thickness (mm)', 0, 99, 23)
-    Insulin = st.sidebar.slider('Insulin (mu U/ml)', 0, 846, 30)
-    BMI = st.sidebar.slider('BMI', 0.0, 67.1, 32.0, step=0.1)
-    DiabetesPedigreeFunction = st.sidebar.slider('Diabetes Pedigree Function', 0.078, 2.42, 0.3725)
-    Age = st.sidebar.slider('Age', 21, 81, 29)
+# --- Feature Name Mappings for Better Display ---
+feature_name_mappings = {
+    # Heart Disease
+    'age': 'Age',
+    'anaemia': 'Anemia',
+    'creatinine_phosphokinase': 'Creatinine Phosphokinase',
+    'diabetes': 'Diabetes',
+    'ejection_fraction': 'Ejection Fraction (%)',
+    'high_blood_pressure': 'High Blood Pressure',
+    'platelets': 'Platelets',
+    'serum_creatinine': 'Serum Creatinine',
+    'serum_sodium': 'Serum Sodium',
+    'sex': 'Sex',
+    'smoking': 'Smoking',
+    'time': 'Follow-up Time (days)',
+    
+    # Diabetes
+    'Pregnancies': 'Pregnancies',
+    'Glucose': 'Glucose Level',
+    'BloodPressure': 'Blood Pressure',
+    'SkinThickness': 'Skin Thickness',
+    'Insulin': 'Insulin Level',
+    'BMI': 'Body Mass Index',
+    'DiabetesPedigreeFunction': 'Diabetes Pedigree Function',
+    'Age': 'Age',
+    
+    # Kidney Disease
+    'bp': 'Blood Pressure',
+    'bgr': 'Blood Glucose Random',
+    'bu': 'Blood Urea',
+    'sod': 'Sodium Level',
+    'pot': 'Potassium Level',
+    'wc': 'White Blood Cell Count',
+    'htn_yes': 'Hypertension',
+    'dm_yes': 'Diabetes Mellitus',
+    'cad_yes': 'Coronary Artery Disease',
+    'appet_poor': 'Poor Appetite',
+    'pe_yes': 'Pedal Edema',
+    'ane_yes': 'Anemia',
+    
+    # Lung Cancer (gene mutations)
+    'Age': 'Age',
+    'Sex_Male': 'Male Gender'
+}
 
-    # Create the input DataFrame
-    data = {'Pregnancies': Pregnancies, 'Glucose': Glucose, 'BloodPressure': BloodPressure,
-            'SkinThickness': SkinThickness, 'Insulin': Insulin, 'BMI': BMI,
-            'DiabetesPedigreeFunction': DiabetesPedigreeFunction, 'Age': Age}
-    input_df = pd.DataFrame(data, index=[0])
-
-    # Define feature order for the model
-    feature_order = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin',
-                     'BMI', 'DiabetesPedigreeFunction', 'Age']
-
-# --- Common UI elements (display input and button) ---
-
-st.subheader("Patient Data Summary")
-
-# Dynamically display the input data in a user-friendly format
-col1, col2 = st.columns(2)
-patient_data = input_df.iloc[0]
-
-# Split the features between the two columns
-features_list = feature_order
-mid_point = len(features_list) // 2 + len(features_list) % 2
-features_col1 = features_list[:mid_point]
-features_col2 = features_list[mid_point:]
-
-with col1:
-    for feature in features_col1:
-        st.markdown(f"**{feature.replace('_', ' ').title()}:** `{patient_data[feature]}`")
-
-with col2:
-    for feature in features_col2:
-        st.markdown(f"**{feature.replace('_', ' ').title()}:** `{patient_data[feature]}`")
-        
+# --- PREDICTION LOGIC ---
 st.divider()
 
-if st.button(f"🔍 Predict {model_choice} Risk"):
-    # Ensure columns are in the correct order
-    input_df_ordered = input_df[feature_order]
+if st.button(f"🔍 Predict {model_choice_name} Risk"):
     
-    # Scale the input
-    scaled_input_np = scaler.transform(input_df_ordered)
-    scaled_input_df = pd.DataFrame(scaled_input_np, columns=feature_order)
+    # 1. Create a dataframe from the UI inputs
+    input_df = pd.DataFrame([data])
     
-    # Make prediction
-    prediction = model.predict(scaled_input_df)
-    prediction_proba = model.predict_proba(scaled_input_df)
+    # 2. Create the final dataframe with all the columns the model expects, in the correct order, filling missing ones with 0
+    final_df = input_df.reindex(columns=feature_order, fill_value=0)
+
+    # 3. Get the scaler and the columns it was trained on
+    scaler = assets['scaler']
+    cols_to_scale = scaler.feature_names_in_
     
-    # Display prediction result (dynamically)
+    # 4. Scale only the necessary columns
+    final_df[cols_to_scale] = scaler.transform(final_df[cols_to_scale])
+
+    # 5. Predict using the correctly formatted and scaled DataFrame
+    model = assets['model']
+    prediction = model.predict(final_df)
+    prediction_proba = model.predict_proba(final_df)
+    
+    # --- Display Prediction and Explanation ---
     st.subheader("Prediction Result")
-    positive_class_text = "mortality from heart failure" if model_choice == 'Heart Disease' else "diabetes"
-    
-    if prediction[0] == 0:
-        st.success(f"The model predicts a **LOW** risk of {positive_class_text}.")
-        st.write(f"**Confidence:** {prediction_proba[0][0]*100:.2f}%")
-    else:
-        st.error(f"The model predicts a **HIGH** risk of {positive_class_text}.")
-        st.write(f"**Confidence:** {prediction_proba[0][1]*100:.2f}%")
-
+    # ... display logic ...
+    positive_class_text_map = {"Heart Disease": "mortality from heart failure", "Diabetes": "diabetes", "Lung Cancer": "mortality from lung cancer", "Kidney Disease": "Chronic Kidney Disease"}
+    positive_class_text = positive_class_text_map[model_choice_name]
+    if prediction[0] == 0: st.success(f"The model predicts a **LOW** risk of {positive_class_text}.")
+    else: st.error(f"The model predicts a **HIGH** risk of {positive_class_text}.")
+    st.write(f"**Confidence:** {prediction_proba[0][1]*100 if prediction[0] == 1 else prediction_proba[0][0]*100:.2f}%")
+        
     st.divider()
-
-    # SHAP Explanation
     st.subheader("Prediction Explanation")
-    st.markdown("The waterfall plot below shows how each feature contributed to the final prediction.")
     
-    explanation = explainer(scaled_input_df)
+    explainer = assets['explainer']
+    explanation = explainer(final_df)
     
-    # Handle multi-class vs single-output from SHAP explainer
+    # ... SHAP display logic ...
     if isinstance(explainer.expected_value, (list, np.ndarray)) and len(explainer.expected_value) > 1:
         explanation_to_plot = explanation[0, :, 1]
     else:
         explanation_to_plot = explanation[0]
 
-    fig, ax = plt.subplots()
+    # Map feature names to readable names
+    readable_feature_names = []
+    for feature in explanation_to_plot.feature_names:
+        if feature in feature_name_mappings:
+            readable_feature_names.append(feature_name_mappings[feature])
+        else:
+            # For lung cancer gene mutations, clean up the name
+            if feature.startswith('EGFR') or feature.startswith('KRAS') or 'mutation' in feature.lower():
+                readable_feature_names.append(feature.replace('_', ' ').title() + ' Mutation')
+            else:
+                readable_feature_names.append(feature.replace('_', ' ').title())
+    
+    # Modify the feature names directly in the explanation object
+    explanation_to_plot.feature_names = readable_feature_names
+
+    fig, ax = plt.subplots(figsize=(10, 6))
     shap.plots.waterfall(explanation_to_plot, show=False)
     plt.tight_layout()
     st.pyplot(fig)
