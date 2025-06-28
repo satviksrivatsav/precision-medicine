@@ -18,7 +18,6 @@ st.set_page_config(
 @st.cache_data
 def load_assets(disease_name):
     """Load the model, scaler, and explainer for the selected disease."""
-    # Construct paths relative to the script location
     base_path = os.path.join("models", disease_name)
     model_path = os.path.join(base_path, f"best_{disease_name}_classifier.joblib")
     scaler_path = os.path.join(base_path, f"{disease_name}_scaler.joblib")
@@ -79,16 +78,22 @@ if model_choice == 'Heart Disease':
 
 elif model_choice == 'Diabetes':
     st.header("🩸 Diabetes Risk Prediction")
-    
-    # Add a disclaimer about the dataset's limitations
-    st.info("ℹ️ **Note:** This model is trained on the PIMA Indians Diabetes Dataset, which includes only female patients of Pima Indian heritage aged 21 and older.")
 
     # Load Diabetes Assets
     model, scaler, explainer = load_assets('diabetes')
 
-    # Sidebar Inputs for Diabetes
+    # --- Sidebar Inputs for Diabetes ---
     st.sidebar.header("Patient Information")
-    Pregnancies = st.sidebar.slider('Pregnancies', 0, 17, 3)
+    
+    # NEW: Add a sex selector to adapt the form
+    sex_d = st.sidebar.selectbox('Sex', ('Female', 'Male'))
+
+    # NEW: Conditionally set the pregnancies input based on selected sex
+    if sex_d == 'Male':
+        Pregnancies = 0
+    else:
+        Pregnancies = st.sidebar.slider('Pregnancies', 0, 17, 3)
+
     Glucose = st.sidebar.slider('Glucose', 0, 199, 117)
     BloodPressure = st.sidebar.slider('Blood Pressure (mm Hg)', 0, 122, 72)
     SkinThickness = st.sidebar.slider('Skin Thickness (mm)', 0, 99, 23)
