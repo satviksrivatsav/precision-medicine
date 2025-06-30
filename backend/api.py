@@ -2,132 +2,126 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, create_model
+from pydantic import BaseModel
 import pandas as pd
 import joblib
 import os
 import shap
 import numpy as np
+import re
 
-# --- 1. App Initialization ---
-app = FastAPI(
-    title="Precision Medicine API Suite",
-    description="API for predicting Heart Disease, Diabetes, Lung Cancer, and Kidney Disease.",
-    version="1.0"
-)
+# --- LlamaIndex Imports (from your smart chatbot) ---
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings, Document
+from llama_index.core.node_parser import SentenceSplitter
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
-# --- 2. CORS Configuration ---
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# --- 1. App Initialization & CORS ---
+app = FastAPI(title="Full AI Suite API", version="1.2")
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-# --- 3. Asset Loading ---
+# --- 2. Transplanted Logic from Your Smart Chatbot ---
+
+class SmartChatbot:
+    # --- This class is copied directly from your app_chatbot_smart.py ---
+    def __init__(self):
+        self.greetings = {
+            'hi': "Hi there! 👋 I'm here to help you. What would you like to know?",
+            'hello': "Hello! 😊 How can I assist you?",
+            'hey': "Hey! 👋 How can I help you today?",
+        }
+        self.thanks_responses = ["You're welcome! 😊", "Glad I could help! 👍"]
+        self.goodbye_response = "Goodbye! 👋 Take care."
+        self.unknown_responses = ["I'm not sure about that. I specialize in the topics from my knowledge base.", "I don't have information on that topic yet. 🤔"]
+        self.similarity_threshold = 0.5
+        
+    def get_response_type(self, text, retrieved_nodes):
+        text_lower = text.lower().strip()
+        for greeting, response in self.greetings.items():
+            if greeting in text_lower: return 'greeting', response
+        if any(word in text_lower for word in ['thank', 'thanks']): return 'thanks', np.random.choice(self.thanks_responses)
+        if any(word in text_lower for word in ['bye', 'goodbye']): return 'goodbye', self.goodbye_response
+        if retrieved_nodes and retrieved_nodes[0].score >= self.similarity_threshold: return 'knowledge', None
+        return 'unknown', np.random.choice(self.unknown_responses)
+
+def parse_qa_file(file_path):
+    # --- This function is copied directly from your app_chatbot_smart.py ---
+    with open(file_path, 'r', encoding='utf-8') as f: content = f.read()
+    qa_pairs = re.split(r'\n\s*Q:', content)
+    documents = []
+    for pair in qa_pairs:
+        if not pair.strip(): continue
+        if 'A:' in pair:
+            q, a = pair.split('A:', 1)
+            question = q.replace('Q:', '').strip()
+            answer = a.strip()
+            doc_text = f"Question: {question}\nAnswer: {answer}"
+            documents.append(Document(text=doc_text, metadata={'question': question, 'answer': answer, 'file_name': os.path.basename(file_path)}))
+    return documents
+
+# --- 3. Asset Loading at Startup ---
 ASSETS = {}
+smart_bot = SmartChatbot()
 
-def load_prediction_assets(model_name):
-    # ... (This function remains exactly the same) ...
-    assets = {}
-    base_path = os.path.join("models", model_name)
-    assets['model'] = joblib.load(os.path.join(base_path, f"best_{model_name}_classifier.joblib"))
-    assets['scaler'] = joblib.load(os.path.join(base_path, f"{model_name}_scaler.joblib"))
-    feature_path = os.path.join(base_path, f"{model_name}_features.joblib")
-    if os.path.exists(feature_path):
-        assets['features'] = joblib.load(feature_path)
-    assets['explainer'] = shap.TreeExplainer(assets['model'])
-    return assets
+def load_chatbot_assets():
+    # --- This is the setup_pipeline logic from your smart chatbot ---
+    print("--- Initializing Smart Q&A pipeline... ---")
+    Settings.embed_model = HuggingFaceEmbedding(model_name="all-MiniLM-L6-v2")
+    Settings.llm = None
+    Settings.node_parser = SentenceSplitter(chunk_size=512, chunk_overlap=50)
+    try:
+        context_dir = "./knowledgeBase"
+        all_documents = []
+        for filename in os.listdir(context_dir):
+            if filename.endswith('.txt'):
+                file_path = os.path.join(context_dir, filename)
+                qa_docs = parse_qa_file(file_path)
+                if qa_docs: all_documents.extend(qa_docs)
+                else: all_documents.extend(SimpleDirectoryReader(input_files=[file_path]).load_data())
+        index = VectorStoreIndex.from_documents(all_documents)
+        print("--- Chatbot knowledge base indexed. ---")
+        return index.as_retriever(similarity_top_k=3)
+    except Exception as e:
+        print(f"!!! ERROR building chatbot index: {e}"); return None
 
 @app.on_event("startup")
 def startup_event():
-    """Load all models into memory when the API starts up."""
-    print("--- Loading all model assets... ---")
-    ASSETS['heart_disease'] = load_prediction_assets('heart_disease')
-    ASSETS['diabetes'] = load_prediction_assets('diabetes')
-    ASSETS['lung_cancer'] = load_prediction_assets('lung_cancer')
-    ASSETS['kidney_disease'] = load_prediction_assets('kidney_disease')
-    print("--- All assets loaded successfully! ---")
-
-# --- 4. Pydantic Models (Input Schemas) ---
-
-# Static models for simple cases
-class HeartDiseaseInput(BaseModel):
-    age: int; anaemia: int; creatinine_phosphokinase: int; diabetes: int
-    ejection_fraction: int; high_blood_pressure: int; platelets: float
-    serum_creatinine: float; serum_sodium: int; sex: int; smoking: int; time: int
-
-class DiabetesInput(BaseModel):
-    Pregnancies: int; Glucose: int; BloodPressure: int; SkinThickness: int
-    Insulin: int; BMI: float; DiabetesPedigreeFunction: float; Age: int
-
-# --- THIS IS THE FIX ---
-# Load feature lists first to dynamically create Pydantic models statically
-try:
-    lung_cancer_features = joblib.load(os.path.join("models", "lung_cancer", "lung_cancer_features.joblib"))
-    LungCancerInput = create_model('LungCancerInput', **{f: (int, ...) for f in lung_cancer_features})
-except FileNotFoundError:
-    # Define a placeholder if the file doesn't exist, to prevent crashes
-    class LungCancerInput(BaseModel):
-        error: str = "Model assets not found"
-
-try:
-    kidney_disease_features = joblib.load(os.path.join("models", "kidney_disease", "kidney_disease_features.joblib"))
-    KidneyDiseaseInput = create_model('KidneyDiseaseInput', **{f: (float, ...) for f in kidney_disease_features})
-except FileNotFoundError:
-    class KidneyDiseaseInput(BaseModel):
-        error: str = "Model assets not found"
+    # We don't need to load the prediction models for this final step, just the chatbot.
+    print("--- Loading AI Assistant assets... ---")
+    ASSETS['chatbot_retriever'] = load_chatbot_assets()
+    print("--- AI Assistant ready! ---")
 
 
-# --- 5. Reusable Prediction Service ---
-def perform_prediction(model_name: str, input_df: pd.DataFrame):
-    # ... (This function remains exactly the same) ...
-    assets = ASSETS[model_name]
-    model, scaler, explainer = assets['model'], assets['scaler'], assets['explainer']
-    feature_order = assets.get('features', list(input_df.columns))
-    input_df_ordered = input_df.reindex(columns=feature_order, fill_value=0)
-    
-    scaled_input_df = input_df_ordered.copy()
-    if hasattr(scaler, 'feature_names_in_'):
-        cols_to_scale = scaler.feature_names_in_
-        cols_that_exist = [col for col in cols_to_scale if col in scaled_input_df.columns]
-        if cols_that_exist:
-            scaled_input_df[cols_that_exist] = scaler.transform(scaled_input_df[cols_that_exist])
-    
-    prediction = model.predict(scaled_input_df)
-    prediction_proba = model.predict_proba(scaled_input_df)
-    explanation = explainer(scaled_input_df)
-    if isinstance(explainer.expected_value, (list, np.ndarray)) and len(explainer.expected_value) > 1:
-        explanation_to_plot = explanation[0, :, 1]
-    else:
-        explanation_to_plot = explanation[0]
-    return {
-        "prediction": int(prediction[0]),
-        "prediction_probability_high_risk": float(prediction_proba[0][1]),
-        "explanation": {
-            "base_value": float(explanation_to_plot.base_values),
-            "shap_values": explanation_to_plot.values.tolist(),
-            "feature_names": scaled_input_df.columns.tolist(),
-        }
-    }
+# --- 4. API Endpoints ---
+class ChatInput(BaseModel):
+    question: str
 
-# --- 6. API Endpoints ---
 @app.get("/")
 def read_root():
-    return {"status": "Precision Medicine API is running."}
+    return {"status": "Smart AI Assistant API is running."}
 
-@app.post("/predict/heart_disease")
-def predict_heart_disease_endpoint(input_data: HeartDiseaseInput):
-    return perform_prediction('heart_disease', pd.DataFrame([input_data.dict()]))
+@app.post("/chat/query")
+def chat_query_endpoint(input_data: ChatInput):
+    retriever = ASSETS.get('chatbot_retriever')
+    if not retriever:
+        return {"response_text": "Sorry, the chatbot is currently unavailable.", "type": "error"}
 
-@app.post("/predict/diabetes")
-def predict_diabetes_endpoint(input_data: DiabetesInput):
-    return perform_prediction('diabetes', pd.DataFrame([input_data.dict()]))
+    question = input_data.question
+    
+    # Use the brain of your SmartChatbot
+    retrieved_nodes = retriever.retrieve(question)
+    response_type, response_text = smart_bot.get_response_type(question, retrieved_nodes)
+    
+    # If it's a knowledge question, get the actual text from the best node
+    if response_type == 'knowledge':
+        best_node = retrieved_nodes[0]
+        text = best_node.get_text()
+        # If it's a Q&A document, just return the answer part.
+        if "Answer:" in text:
+            response_text = text.split("Answer:", 1)[1].strip()
+        else:
+            response_text = text
 
-@app.post("/predict/lung_cancer")
-def predict_lung_cancer_endpoint(input_data: LungCancerInput):
-    return perform_prediction('lung_cancer', pd.DataFrame([input_data.dict()]))
-
-@app.post("/predict/kidney_disease")
-def predict_kidney_disease_endpoint(input_data: KidneyDiseaseInput):
-    return perform_prediction('kidney_disease', pd.DataFrame([input_data.dict()]))
+    return {
+        "response_text": response_text,
+        "response_type": response_type
+    }
