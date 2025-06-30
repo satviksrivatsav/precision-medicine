@@ -1,87 +1,152 @@
-Diabetes
-Key facts
-The number of people living with diabetes rose from 200 million in 1990 to 830 million in 2022. Prevalence has been rising more rapidly in low- and middle-income countries than in high-income countries.
-More than half of people living with diabetes did not take medication for their diabetes in 2022. Diabetes treatment coverage was lowest in low- and middle-income countries.
-Diabetes causes blindness, kidney failure, heart attacks, stroke and lower limb amputation.
-In 2021, diabetes and kidney disease due to diabetes caused over 2 million deaths. In addition, around 11% of cardiovascular deaths were caused by high blood glucose.
-A healthy diet, regular physical activity, maintaining a normal body weight and avoiding tobacco use are ways to prevent or delay the onset of type 2 diabetes.
-Diabetes can be treated and its consequences avoided or delayed with diet, physical activity, medication and regular screening and treatment for complications.
+Q: What is diabetes?
+A: Diabetes is a chronic disease where the pancreas doesn't produce enough insulin or the body cannot effectively use it, leading to high blood glucose levels (hyperglycaemia).
 
-Overview
-Diabetes is a chronic disease that occurs either when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces. Insulin is a hormone that regulates blood glucose. Hyperglycaemia, also called raised blood glucose or raised blood sugar, is a common effect of uncontrolled diabetes and over time leads to serious damage to many of the body's systems, especially the nerves and blood vessels.
-In 2022, 14% of adults aged 18 years and older were living with diabetes, an increase from 7% in 1990. More than half (59%) of adults aged 30 years and over living with diabetes were not taking medication for their diabetes in 2022. Diabetes treatment coverage was lowest in low- and middle-income countries.
+Q: What causes high blood glucose in diabetes?
+A: Either insufficient insulin production or the body's inability to use insulin properly.
 
-In 2021, diabetes was the direct cause of 1.6 million deaths and 47% of all deaths due to diabetes occurred before the age of 70 years. Another 530 000 kidney disease deaths were caused by diabetes, and high blood glucose causes around 11% of cardiovascular deaths (1).
+Q: What are the types of diabetes?
+A: Type 1 diabetes, Type 2 diabetes, and gestational diabetes.
 
-Since 2000, mortality rates from diabetes have been increasing. By contrast, the probability of dying from any one of the four main noncommunicable diseases (cardiovascular diseases, cancer, chronic respiratory diseases or diabetes) between the ages of 30 and 70 decreased by 20% globally between 2000 and 2019. 
+Q: How many people had diabetes in 2022?
+A: About 830 million people worldwide.
 
-Symptoms
-Symptoms of diabetes may occur suddenly. In type 2 diabetes, the symptoms can be mild and may take many years to be noticed.
+Q: How has diabetes prevalence changed since 1990?
+A: It increased from 200 million in 1990 to 830 million in 2022.
 
-Symptoms of diabetes include:
+Q: What percentage of adults had diabetes in 2022?
+A: 14% of adults aged 18 and older.
 
-feeling very thirsty
-needing to urinate more often than usual
-blurred vision
-feeling tired
-losing weight unintentionally
-Over time, diabetes can damage blood vessels in the heart, eyes, kidneys and nerves.
+Q: How many people with diabetes were not on medication in 2022?
+A: More than 59% of adults aged 30 and older.
 
-People with diabetes have a higher risk of health problems including heart attack, stroke and kidney failure.
+Q: What are common symptoms of diabetes?
+A: Thirst, frequent urination, fatigue, blurred vision, and unintentional weight loss.
 
-Diabetes can cause permanent vision loss by damaging blood vessels in the eyes.
+Q: Do symptoms of type 2 diabetes appear quickly?
+A: No, they often develop slowly and may go unnoticed for years.
 
-Many people with diabetes develop problems with their feet from nerve damage and poor blood flow. This can cause foot ulcers and may lead to amputation.
+Q: What complications can diabetes cause?
+A: Blindness, kidney failure, heart attacks, stroke, and limb amputations.
 
-Type 1 diabetes
-Type 1 diabetes (previously known as insulin-dependent, juvenile or childhood-onset) is characterized by deficient insulin production and requires daily administration of insulin. In 2017 there were 9 million people with type 1 diabetes; the majority of them live in high-income countries. Neither its cause nor the means to prevent it are known.
+Q: How does diabetes affect the eyes?
+A: It can cause permanent vision loss by damaging blood vessels in the eyes (retinopathy).
 
-Type 2 diabetes
-Type 2 diabetes affects how your body uses sugar (glucose) for energy. It stops the body from using insulin properly, which can lead to high levels of blood sugar if not treated.
+Q: How does diabetes affect the feet?
+A: It may cause nerve damage and poor blood flow, leading to ulcers and potential amputation.
 
-Over time, type 2 diabetes can cause serious damage to the body, especially nerves and blood vessels.
+Q: How many deaths were caused by diabetes in 2021?
+A: 1.6 million directly, and 530,000 from kidney disease due to diabetes.
 
-Type 2 diabetes is often preventable. Factors that contribute to developing type 2 diabetes include being overweight, not getting enough exercise, and genetics.
+Q: What percentage of cardiovascular deaths are linked to high blood glucose?
+A: Around 11%.
 
-Early diagnosis is important to prevent the worst effects of type 2 diabetes. The best way to detect diabetes early is to get regular check-ups and blood tests with a healthcare provider.
+Q: What proportion of diabetes-related deaths occurred before age 70?
+A: 47% in 2021.
 
-Symptoms of type 2 diabetes can be mild. They may take several years to be noticed.  Symptoms may be similar to those of type 1 diabetes but are often less marked. As a result, the disease may be diagnosed several years after onset, after complications have already arisen.
+Q: What is type 1 diabetes?
+A: A form of diabetes where the body produces little or no insulin. It requires daily insulin injections.
 
-More than 95% of people with diabetes have type 2 diabetes. Type 2 diabetes was formerly called non-insulin dependent, or adult onset. Until recently, this type of diabetes was seen only in adults but it is now also occurring increasingly frequently in children.
+Q: Who typically develops type 1 diabetes?
+A: It usually develops in children or young adults.
 
-Gestational diabetes
-Gestational diabetes is hyperglycaemia with blood glucose values above normal but below those diagnostic of diabetes. Gestational diabetes occurs during pregnancy.
+Q: Can type 1 diabetes be prevented?
+A: No, the cause is unknown and there is no known prevention.
 
-Women with gestational diabetes are at an increased risk of complications during pregnancy and at delivery. These women and possibly their children are also at increased risk of type 2 diabetes in the future.
+Q: What is type 2 diabetes?
+A: A condition where the body does not use insulin properly, often associated with lifestyle factors.
 
-Gestational diabetes is diagnosed through prenatal screening, rather than through reported symptoms.
+Q: Is type 2 diabetes preventable?
+A: Yes, with lifestyle changes such as diet, exercise, and maintaining a healthy weight.
 
-Impaired glucose tolerance and impaired fasting glycaemia
-Impaired glucose tolerance (IGT) and impaired fasting glycaemia (IFG) are intermediate conditions in the transition between normality and diabetes. People with IGT or IFG are at high risk of progressing to type 2 diabetes, although this is not inevitable.
+Q: Who gets type 2 diabetes?
+A: Mostly adults, but increasingly found in children too.
 
-Prevention
-Lifestyle changes are the best way to prevent or delay the onset of type 2 diabetes.
+Q: What percentage of diabetes cases are type 2?
+A: Over 95%.
 
-To help prevent type 2 diabetes and its complications, people should:
+Q: What is gestational diabetes?
+A: High blood sugar during pregnancy, not high enough to be diagnosed as diabetes.
 
-reach and keep a health body weight
-stay physically active with at least 150 minutes of moderate exercise each week
-eat a healthy diet and avoid sugar and saturated fat
-not smoke tobacco.
-Diagnosis and treatment
-Early diagnosis can be accomplished through relatively inexpensive testing of blood glucose. People with type 1 diabetes need insulin injections for survival.
+Q: What are the risks of gestational diabetes?
+A: Pregnancy and delivery complications, and increased future risk of type 2 diabetes for both mother and child.
 
-One of the most important ways to treat diabetes is to keep a healthy lifestyle.
+Q: How is gestational diabetes diagnosed?
+A: Through prenatal screening, not symptoms.
 
-Some people with type 2 diabetes will need to take medicines to help manage their blood sugar levels. These can include insulin injections or other medicines. Some examples include:
+Q: What are IGT and IFG?
+A: Impaired Glucose Tolerance and Impaired Fasting Glycaemia are conditions that increase the risk of developing type 2 diabetes.
 
-metformin
-sulfonylureas
-sodium-glucose co-transporters type 2 (SGLT-2) inhibitors.
-Along with medicines to lower blood sugar, people with diabetes often need medications to lower their blood pressure and statins to reduce the risk of complications.
+Q: Do IGT and IFG always lead to diabetes?
+A: No, but they indicate higher risk.
 
-Additional medical care may be needed to treat the effects of diabetes:
+Q: How can type 2 diabetes be prevented?
+A: By maintaining a healthy weight, staying active, eating a balanced diet, and avoiding tobacco.
 
-foot care to treat ulcers
-screening and treatment for kidney disease
-eye exams to screen for retinopathy (which causes blindness).
+Q: How much physical activity is recommended to prevent type 2 diabetes?
+A: At least 150 minutes of moderate exercise per week.
+
+Q: How is diabetes diagnosed?
+A: With blood glucose tests.
+
+Q: How is type 1 diabetes treated?
+A: With daily insulin injections.
+
+Q: How is type 2 diabetes treated?
+A: Through lifestyle changes, oral medications, and sometimes insulin.
+
+Q: What are common medications for type 2 diabetes?
+A: Metformin, sulfonylureas, and SGLT-2 inhibitors.
+
+Q: What additional care may people with diabetes need?
+A: Blood pressure medication, statins, foot care, kidney disease screening, and eye exams.
+
+Q: How does diabetes increase the risk of heart disease?
+A: Diabetes damages blood vessels and the nerves that control the heart. High blood sugar causes inflammation and accelerates plaque buildup in arteries, making heart attacks and strokes more likely.
+
+Q: What is insulin and what role does it play in diabetes?
+A: Insulin is a hormone produced by the pancreas that helps cells absorb glucose from the blood. In diabetes, insulin is either lacking or not used effectively, leading to high blood sugar levels.
+
+Q: What is HbA1c and why is it important?
+A: HbA1c is a blood test that shows the average blood sugar level over the past 2 to 3 months. It’s used to diagnose diabetes and monitor how well it is being managed. A result of 6.5% or higher typically indicates diabetes.
+
+Q: What is fasting blood glucose?
+A: Fasting blood glucose is the level of sugar in the blood after not eating for at least 8 hours. A value of 126 mg/dL or higher usually indicates diabetes.
+
+Q: What is postprandial blood glucose?
+A: Postprandial blood glucose is the level of sugar in the blood measured two hours after eating. High levels may indicate impaired glucose tolerance or diabetes.
+
+Q: Can diabetes be managed without medication?
+A: Yes, especially in early stages of type 2 diabetes. Lifestyle changes like diet, physical activity, and weight loss can help control blood sugar levels. However, many people will eventually need medication.
+
+Q: What are the long-term complications of uncontrolled diabetes?
+A: Long-term complications include cardiovascular disease, kidney failure, nerve damage (neuropathy), eye damage (retinopathy), poor wound healing, and increased risk of infections.
+
+Q: How does diabetes affect kidney health?
+A: Diabetes is the leading cause of chronic kidney disease. High blood sugar damages the small blood vessels in the kidneys, reducing their filtering ability and leading to kidney failure if not managed.
+
+Q: How often should someone with diabetes see a doctor?
+A: Regular check-ups every 3 to 6 months are recommended, along with annual screenings for eye health, kidney function, and foot health to catch complications early.
+
+Q: What is diabetic neuropathy?
+A: Diabetic neuropathy is nerve damage caused by long-term high blood sugar. It commonly affects the legs and feet, causing pain, tingling, numbness, or weakness.
+
+Q: What is prediabetes?
+A: Prediabetes is a condition where blood sugar levels are higher than normal but not high enough to be diagnosed as diabetes. Without intervention, it often progresses to type 2 diabetes.
+
+Q: Can someone have diabetes and not know it?
+A: Yes. Type 2 diabetes often develops slowly and may have no obvious symptoms in the early stages, so many people remain undiagnosed for years.
+
+Q: What is the role of diet in managing diabetes?
+A: A healthy diet can help control blood sugar levels, manage weight, and reduce the risk of complications. It typically includes whole grains, fruits, vegetables, lean protein, and limited sugar and saturated fats.
+
+Q: What is continuous glucose monitoring (CGM)?
+A: CGM uses a small sensor under the skin to track blood sugar levels in real time throughout the day and night. It helps people with diabetes manage their condition more effectively.
+
+Q: What are SGLT2 inhibitors and how do they help in diabetes?
+A: SGLT2 inhibitors are a class of diabetes medication that lower blood sugar by causing the kidneys to remove glucose through urine. They also reduce the risk of heart failure and kidney disease.
+
+Q: Is there a cure for diabetes?
+A: There is no cure for diabetes, but it can be effectively managed. Type 2 diabetes remission is possible in some cases through significant weight loss and lifestyle changes.
+
+Q: How many types of diabetes are there?
+A: There are three types of diabetes: type 1, type 2, and gestational.

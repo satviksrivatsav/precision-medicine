@@ -1,182 +1,100 @@
-Overview
-Heart disease describes a range of conditions that affect the heart. Heart disease includes:
+# heart_disease_qa.txt
 
-Blood vessel disease, such as coronary artery disease.
-Irregular heartbeats, called arrhythmias.
-Heart conditions that you're born with, called congenital heart defects.
-Disease of the heart muscle.
-Heart valve disease.
-Many forms of heart disease can be prevented or treated with healthy lifestyle choices.
+Q: What is heart disease?
+A: Heart disease describes a range of conditions that affect the heart, including blood vessel disease (coronary artery disease), irregular heartbeats (arrhythmias), congenital heart defects, heart muscle disease, and heart valve disease.
 
+Q: What are the symptoms of coronary artery disease?
+A: Symptoms include chest pain or discomfort (angina), shortness of breath, pain in the neck, jaw, throat, upper belly or back, and pain, numbness, weakness or coldness in the legs or arms if blood vessels are narrowed.
 
-Symptoms
-Heart disease symptoms depend on the type of heart disease.
+Q: What causes coronary artery disease?
+A: The most common cause is atherosclerosis - a buildup of fats, cholesterol and other substances (plaque) in and on the artery walls. This buildup reduces blood flow to the heart and can lead to heart attack or stroke.
 
-Symptoms of heart disease in the blood vessels
-Coronary artery disease is a common heart condition that affects the major blood vessels that supply the heart muscle. A buildup of fats, cholesterol and other substances in and on the artery walls usually causes coronary artery disease. This buildup is called plaque. The buildup of plaque in the arteries is called atherosclerosis (ath-ur-o-skluh-ROE-sis). Atherosclerosis reduces blood flow to the heart and other parts of the body. It can lead to a heart attack, chest pain or a stroke.
+Q: What are the symptoms of heart arrhythmias?
+A: Symptoms include chest pain or discomfort, dizziness, fainting, fluttering in the chest, lightheadedness, racing or slow heartbeat, and shortness of breath.
 
-Symptoms of coronary artery disease can include:
+Q: What are the risk factors for heart disease?
+A: Major risk factors include age, being male, family history, smoking, unhealthy diet, high blood pressure, high cholesterol, diabetes, obesity, lack of exercise, stress, and poor dental health.
 
-Chest pain, chest tightness, chest pressure and chest discomfort, called angina.
-Shortness of breath.
-Pain in the neck, jaw, throat, upper belly or back.
-Pain, numbness, weakness or coldness in the legs or arms if the blood vessels in those body areas are narrowed.
-You might not be diagnosed with coronary artery disease until you have a heart attack, angina, a stroke or heart failure. It's important to watch for heart symptoms. Talk with your healthcare team about any concerns. Heart disease can sometimes be found early with regular health checkups.
+Q: How can heart disease be prevented?
+A: Prevention includes not smoking, eating a diet low in salt and saturated fat, exercising at least 30 minutes daily, maintaining healthy weight, managing stress, controlling blood pressure and cholesterol, and getting good sleep (7-9 hours daily).
 
-What is coronary artery disease? A Mayo Clinic cardiologist explains.
-Stephen Kopecky, M.D., talks about the risk factors, symptoms and treatment of coronary artery disease (CAD). Learn how lifestyle changes can lower your risk.
+Q: When should I see a doctor for heart disease symptoms?
+A: Get emergency help immediately for chest pain, shortness of breath, or fainting. Call 911 if you think you're having a heart attack. Make an appointment for other concerning symptoms as early detection makes treatment easier.
 
-Heart disease symptoms caused by irregular heartbeats, called arrhythmias
-The heart may beat too quickly, too slowly or irregularly. Heart arrhythmia symptoms can include:
+Q: What are the complications of heart disease?
+A: Possible complications include heart failure, heart attack, stroke, aneurysm, peripheral artery disease, and sudden cardiac arrest.
 
-Chest pain or discomfort.
-Dizziness.
-Fainting or almost fainting.
-Fluttering in the chest.
-Lightheadedness.
-Racing heartbeat.
-Shortness of breath.
-Slow heartbeat.
-Heart disease symptoms caused by congenital heart defects
-A congenital heart defect is a heart condition present at birth. Serious congenital heart defects usually are noticed soon after birth. Congenital heart defect symptoms in children could include:
+Q: What is cardiomyopathy?
+A: Cardiomyopathy is disease of the heart muscle. Early stages may have no symptoms, but as it worsens, symptoms include dizziness, fatigue, shortness of breath, rapid heartbeats, and swollen legs or feet.
 
-Blue or gray skin. Depending on skin color, these changes may be easier or harder to see.
-Swelling in the legs, belly area or areas around the eyes.
-In an infant, shortness of breath during feedings, leading to poor weight gain.
-Some congenital heart defects may not be found until later in childhood or during adulthood. Symptoms may include:
+Q: What is heart valve disease?
+A: Heart valve disease occurs when one of the four heart valves doesn't work properly. It can involve narrowing (stenosis) or backward blood flow (regurgitation). Symptoms include chest pain, fainting, fatigue, irregular heartbeats, shortness of breath, and swollen feet or ankles.
 
-Getting very short of breath during exercise or activity.
-Easily tiring during exercise or activity.
-Swelling of the hands, ankles or feet.
-Heart disease symptoms caused by diseased heart muscle, called cardiomyopathy
-In the beginning, cardiomyopathy may not cause noticeable symptoms. As the condition gets worse, symptoms may include:
+Q: What is the difference between a heart attack and cardiac arrest?
+A: A heart attack occurs when blood flow to part of the heart is blocked, usually by a clot, but the heart typically continues to beat. Cardiac arrest happens when the heart suddenly stops beating due to an electrical malfunction. Cardiac arrest is a medical emergency and can lead to death if not treated immediately with CPR and defibrillation.
 
-Dizziness, lightheadedness and fainting.
-Fatigue.
-Feeling short of breath during activity or at rest.
-Feeling short of breath at night when trying to sleep, or waking up short of breath.
-Rapid, pounding or fluttering heartbeats.
-Swollen legs, ankles or feet.
-Heart disease symptoms caused by heart valve disease
-The heart has four valves. The valves open and close to move blood through the heart. Many things can damage the heart valves. If a heart valve is narrowed, it's called stenosis. If a heart valve lets blood flow backward, it's called regurgitation.
+Q: What is angina and how is it different from a heart attack?
+A: Angina is chest pain or discomfort caused by reduced blood flow to the heart muscle. It is usually triggered by physical exertion or emotional stress and goes away with rest. A heart attack, on the other hand, causes permanent damage to heart muscle due to complete blockage and needs emergency treatment.
 
-Symptoms of heart valve disease depend on which valve isn't working right. Symptoms may include:
+Q: Can heart disease be reversed?
+A: While some damage from heart disease may be permanent, early intervention can halt or partially reverse disease progression. Lifestyle changes like eating a heart-healthy diet, regular exercise, quitting smoking, and controlling blood pressure and cholesterol can significantly improve heart health.
 
-Chest pain.
-Fainting or almost fainting.
-Fatigue.
-Irregular heartbeats.
-Shortness of breath.
-Swollen feet or ankles.
-When to see a doctor
-Get emergency medical help if you have these heart disease symptoms:
+Q: What tests are used to diagnose heart disease?
+A: Common diagnostic tests include electrocardiogram (ECG), echocardiogram, stress test, chest X-ray, cardiac catheterization, CT angiography, and blood tests for cardiac markers like troponin, cholesterol, and creatine kinase.
 
-Chest pain.
-Shortness of breath.
-Fainting.
-Always call 911 or your local emergency number if you think you might be having a heart attack.
+Q: What is LDL and HDL cholesterol?
+A: LDL (low-density lipoprotein) is known as "bad" cholesterol because it contributes to plaque buildup in arteries. HDL (high-density lipoprotein) is "good" cholesterol that helps remove LDL from the bloodstream. A healthy heart requires low LDL and high HDL levels.
 
-If you think you may have symptoms of heart disease, make an appointment for a health checkup.
+Q: What is serum creatinine and why is it relevant to heart disease?
+A: Serum creatinine is a waste product in the blood that comes from muscle activity and is filtered out by the kidneys. Elevated levels may indicate kidney dysfunction, which is a risk factor for heart disease since the heart and kidneys are closely connected.
 
-Heart disease is easier to treat when found early.
+Q: What is blood pressure and how does it affect heart disease?
+A: Blood pressure is the force of circulating blood against the artery walls. High blood pressure (hypertension) can damage blood vessels and strain the heart, leading to increased risk of heart attack, stroke, and heart failure.
 
-Causes
-Heart disease causes depend on the specific type of heart disease. There are many different types of heart disease.
+Q: What role does diabetes play in heart disease?
+A: Diabetes increases the risk of heart disease by damaging blood vessels and the nerves that control the heart. High blood sugar levels contribute to plaque buildup in arteries and increase inflammation, both of which raise cardiovascular risk.
 
-How the heart works
-Chambers and valves of the heart
-Chambers and valves of the heart
-Enlarge image
-To understand the causes of heart disease, it may help to understand how the heart works.
+Q: What is an echocardiogram?
+A: An echocardiogram is an ultrasound scan of the heart. It provides images that help assess heart structure and function, detect valve problems, measure ejection fraction, and identify areas of poor blood flow or damage.
 
-The heart has four chambers. The two upper chambers are called the atria. The two lower chambers are called the ventricles.
-The right side of the heart moves blood to the lungs through blood vessels called the pulmonary arteries.
-In the lungs, blood gets oxygen. The oxygen-rich blood goes to the left side of the heart through the pulmonary veins.
-The left side of the heart then pumps the blood through the body's main artery, called the aorta. The blood then goes to the rest of the body.
-Heart valves
-Four valves in the heart keep blood flowing in the right direction. These valves are:
+Q: Can young people get heart disease?
+A: Yes. Although heart disease is more common with age, young people can develop it due to factors like genetics, smoking, obesity, high blood pressure, diabetes, high cholesterol, congenital heart defects, and drug use.
 
-Aortic valve.
-Mitral valve.
-Pulmonary valve.
-Tricuspid valve.
-Each valve has flaps, called leaflets or cusps. The flaps open and close once during each heartbeat. If a valve flap doesn't open or close properly, less blood moves out of the heart to the rest of the body.
+Q: What is troponin and why is it tested?
+A: Troponin is a protein released into the blood when heart muscle is damaged. High levels of troponin in blood tests are a key indicator of a heart attack and help doctors determine the extent of heart damage.
 
-Heartbeats
-The heart's electrical system keeps the heart beating. The heart's electrical signals start in a group of cells at the top of the heart called the sinus node. They pass through a pathway between the upper and lower heart chambers called the atrioventricular (AV) node. The movement of the signals causes the heart to squeeze and pump blood.
+Q: What lifestyle changes help manage heart disease?
+A: Key lifestyle changes include quitting smoking, eating more fruits and vegetables, reducing salt and saturated fat intake, exercising regularly, limiting alcohol, managing stress, and following medical advice on medications and monitoring.
 
-Causes of coronary artery disease
-Development of atherosclerosis
-Development of atherosclerosis
-A buildup of fatty substances in the arteries, called atherosclerosis, is the most common cause of coronary artery disease. Risk factors include an unhealthy diet, lack of exercise, obesity, and smoking. Healthy-lifestyle choices can help lower the risk of atherosclerosis.
+Q: What is a stent and when is it used?
+A: A stent is a small mesh tube inserted into a narrowed or blocked artery to keep it open. It is commonly used in coronary angioplasty to restore blood flow to the heart in people with coronary artery disease.
 
-Causes of irregular heartbeats, called arrhythmias
-Common causes of arrhythmias or conditions that can lead to them include:
+Q: What is ejection fraction?
+A: Ejection fraction (EF) is a measurement of the percentage of blood the left ventricle pumps out with each contraction. A normal EF is 55% to 70%. Low EF can be a sign of heart failure or cardiomyopathy.
 
-Heart muscle disease, called cardiomyopathy.
-Coronary artery disease.
-Diabetes.
-Illegal drugs such as cocaine.
-Emotional stress.
-Too much alcohol or caffeine.
-Heart conditions present at birth, called congenital heart defects.
-High blood pressure.
-Smoking.
-Heart valve disease.
-Some medicines, herbs and supplements.
-Causes of congenital heart defects
-A congenital heart defect happens while a baby is growing in the womb. Healthcare professionals aren't sure exactly what causes most congenital heart defects. But gene changes, some medical conditions, some medicines, and environmental or lifestyle factors may play a role.
+Q: What is heart failure?
+A: Heart failure means the heart is not pumping blood as well as it should. It doesn't mean the heart has stopped, but that it is too weak or stiff to supply the body’s needs. Symptoms include fatigue, shortness of breath, and swelling in the legs or ankles.
 
-Causes of heart muscle disease, called cardiomyopathy
-The cause of cardiomyopathy depends on the type. There are three types:
+Q: What is anaemia and how does it relate to heart disease?
+A: Anaemia is a condition in which you have fewer red blood cells or less hemoglobin than normal. This reduces oxygen delivery to tissues and forces the heart to work harder, increasing the risk of complications, especially in people with heart disease.
 
-Dilated cardiomyopathy. This is the most common type of cardiomyopathy. The cause is often unknown. It may be passed down through families, which means it's inherited.
-Hypertrophic cardiomyopathy. This type is usually passed down through families.
-Restrictive cardiomyopathy. This type of cardiomyopathy can happen for no known reason. Sometimes a buildup of protein called amyloid causes it. Other causes include connective tissue disorders.
-Causes of heart valve disease
-Many things can cause a damaged or diseased heart valve. Some people are born with heart valve disease. If this happens, it's called congenital heart valve disease.
+Q: What is creatinine phosphokinase (CPK) and why is it important?
+A: Creatinine phosphokinase is an enzyme found in the heart, brain, and skeletal muscles. High levels in the blood may indicate muscle damage, including heart muscle damage, and can be a sign of heart attack or heart failure.
 
-Other causes of heart valve disease can include:
+Q: What is the connection between diabetes and heart disease?
+A: Diabetes raises blood sugar levels, which damages blood vessels and nerves controlling the heart. It also increases inflammation and accelerates plaque buildup, making heart disease more likely.
 
-Rheumatic fever.
-Infection in the lining of the heart valves, called infectious endocarditis.
-Connective tissue disorders.
+Q: What is ejection fraction and why is it measured?
+A: Ejection fraction (EF) is the percentage of blood the left ventricle pumps out with each heartbeat. It helps assess how well the heart is functioning. A low EF is a sign of heart failure or weakened heart muscle.
 
-Omega-6 fatty acids
-Risk factors
-Risk factors for heart disease include:
+Q: What does high blood pressure mean for the heart?
+A: High blood pressure (hypertension) puts extra strain on the heart and arteries, causing the heart to thicken and stiffen over time. It significantly increases the risk of heart attack, heart failure, and stroke.
 
-Age. Growing older increases the risk of damaged and narrowed arteries and a weakened or thickened heart muscle.
-Sex assigned at birth. Men are generally at greater risk of heart disease. The risk in women increases after menopause.
-Family history. A family history of heart disease increases the risk of coronary artery disease, especially if a parent developed it at an early age. That means before age 55 for a male relative, such as a brother or your father, and 65 for a female relative, such as your mother or a sister.
-Smoking. If you smoke, quit. Substances in tobacco smoke damage the arteries. Heart attacks are more common in people who smoke than in people who don't smoke. Talk with a healthcare professional if you need help quitting.
-Unhealthy diet. Diets high in fat, salt, sugar and cholesterol have been linked to heart disease.
-High blood pressure. High blood pressure that's not controlled can cause the arteries to become hard and thick. These changes alter blood flow to the heart and body.
-High cholesterol. Having high cholesterol increases the risk of atherosclerosis. Atherosclerosis has been linked to heart attack and stroke.
-Diabetes. Diabetes increases the risk of heart disease. Obesity and high blood pressure increase the risk of diabetes and heart disease.
-Obesity. Excess weight typically worsens other heart disease risk factors.
-Lack of exercise. Being inactive is associated with many forms of heart disease and some of its risk factors too.
-Stress. Emotional stress may damage the arteries and make other heart disease risk factors worse.
-Poor dental health. Having unhealthy teeth and gums makes it easier for germs to get into the bloodstream and travel to the heart. This can cause an infection called endocarditis. Brush and floss your teeth often. Also get regular dental checkups.
-Complications
-Possible complications of heart disease are:
+Q: What are platelets and why are their levels important in heart disease?
+A: Platelets are blood components that help with clotting. Abnormal platelet counts can indicate issues like bleeding risk or blood clots, both of which can affect heart disease outcomes and treatment.
 
-Heart failure. This is one of the most common complications of heart disease. The heart can't pump enough blood to meet the body's needs.
-Heart attack. A heart attack can happen if a piece of plaque in an artery or a blood clot moves to the heart.
-Stroke. The risk factors that lead to heart disease also can lead to an ischemic stroke. This type of stroke happens when the arteries to the brain are narrowed or blocked. Too little blood reaches the brain.
-Aneurysm. An aneurysm is a bulge in the wall of an artery. If an aneurysm bursts, you may have life-threatening internal bleeding.
-Peripheral artery disease. In this condition, the arms or legs — usually the legs — don't get enough blood. This causes symptoms, most notably leg pain when walking, called claudication. Atherosclerosis can lead to peripheral artery disease.
-Sudden cardiac arrest. Sudden cardiac arrest is the sudden loss of heart activity, breathing and consciousness. It's usually due to a problem with the heart's electrical system. Sudden cardiac arrest is a medical emergency. If not treated immediately, it results in sudden cardiac death.
-More Information
-Heart disease care at Mayo Clinic
-Flu shots and heart disease
-Prevention
-The same lifestyle changes used to manage heart disease also may help prevent it. Try these heart-healthy tips:
+Q: What is serum creatinine and what does it indicate?
+A: Serum creatinine is a waste product from muscle activity, filtered out by the kidneys. High levels suggest impaired kidney function, which is linked to worse outcomes in heart disease.
 
-Don't smoke.
-Eat a diet that's low in salt and saturated fat.
-Exercise at least 30 minutes a day on most days of the week.
-Maintain a healthy weight.
-Reduce and manage stress.
-Control high blood pressure, high cholesterol and diabetes.
-Get good sleep. Adults should aim for 7 to 9 hours daily.
+Q: What is serum sodium and why is it relevant to heart health?
+A: Serum sodium is the concentration of sodium in the blood. Abnormal sodium levels, especially low sodium (hyponatremia), are common in advanced heart failure and can be a sign of poor prognosis.
