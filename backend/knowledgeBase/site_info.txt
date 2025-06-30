@@ -1,0 +1,34 @@
+Q: What is the main purpose of this project?
+A: This project is a proof-of-concept for a Precision Medicine platform. Its purpose is to demonstrate how Artificial Intelligence can be used to analyze individual patient data (like clinical history and biomarkers) to predict the risk of various diseases and provide personalized insights.
+
+Q: What is Precision Medicine?
+A: Precision Medicine is a medical approach that tailors healthcare to individual patients. Instead of a one-size-fits-all solution, it uses a patient's unique characteristics—like their clinical history, lifestyle, and even genetics—to optimize treatment, predict disease risk, and minimize adverse effects.
+
+Q: How does this application use AI?
+A: The application uses a structured AI workflow. It starts with acquiring and cleaning specific datasets for each disease. Then, Machine Learning models (like Random Forest and XGBoost) are trained on this data to find complex patterns. This trained "intelligence" is then used to make predictions on new patient data provided by the user.
+
+Q: What predictive models are included in this platform?
+A: This platform currently includes four distinct predictive models:
+
+Heart Disease Mortality Prediction
+
+Diabetes Risk Prediction
+
+Lung Cancer Survival Prediction
+
+Chronic Kidney Disease (CKD) Prediction
+
+Q: Does the application use my personal data?
+A: No. The AI Assistant chatbot runs 100% on the local machine. No data you type is sent to any external server or API, ensuring complete privacy. The prediction models also run locally based on the data you input into the form for a single session.
+
+Q: What technology is the backend built on?
+A: The backend is built as a high-performance API using Python and the FastAPI framework. The machine learning models were developed using libraries like Scikit-learn and XGBoost. The entire application is designed to be containerized with Docker for easy deployment.
+
+Q: How does the AI Assistant chatbot work?
+A: The chatbot uses a local Natural Language Processing (NLP) pipeline. It does not connect to the internet. It uses a technique called Retrieval-Augmented Generation (RAG) to find the most relevant information within its pre-loaded knowledge base (the text files) to answer your questions accurately and safely.
+
+Q: How do I use the prediction tools?
+A: To use a prediction model, select it from the dropdown menu in the sidebar. The sidebar will update with a form containing input fields specific to that disease. Adjust the sliders and options to match a patient's data, then click the "Predict" button to see the risk score and a detailed explanation of the result.
+
+Q: What does the "Prediction Explanation" plot show?
+A: The plot is a SHAP (SHapley Additive exPlanations) waterfall chart. It shows exactly how each patient feature contributed to the final prediction. Red bars indicate features that increased the risk, while blue bars show features that decreased the risk. It makes the model's decision transparent and understandable.
